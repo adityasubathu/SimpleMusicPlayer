@@ -1,25 +1,26 @@
 package com.adityasubathu.simplemusicplayer;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
-import java.security.Permission;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -27,9 +28,9 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     private static final int READ_STORAGE_PERMISSION_REQUEST_FLAG = 1;
-    List<String> songsList = new ArrayList<>();
+    List<String> songsList = new ArrayList<>(), artistList = new ArrayList<>();
     ListView listView;
-    ArrayAdapter adapter;
+    songsListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +57,9 @@ public class MainActivity extends AppCompatActivity {
             do {
                 String title = songsCursor.getString(songTitleIndex);
                 String artist = songsCursor.getString(songArtistIndex);
-                songsList.add(title + "\n" + artist);
-            }while (songsCursor.moveToNext());
+                songsList.add(title);
+                artistList.add(artist);
+            } while (songsCursor.moveToNext());
         }
         Objects.requireNonNull(songsCursor).close();
     }
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     void prepareAdapter(){
         listView = findViewById(R.id.listView);
         getMusicInfo();
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, songsList);
+        adapter = new songsListAdapter(this, songsList, artistList);
 
         listView.setAdapter(adapter);
 
@@ -98,26 +100,45 @@ public class MainActivity extends AppCompatActivity {
 
 class songsListAdapter extends BaseAdapter{
 
-    public songsListAdapter() {
+    private List<String> songsList, artistList;
+    private Context context;
+
+    songsListAdapter(Context c, List<String> songs, List<String> artist) {
+        context = c;
+        songsList = songs;
+        artistList = artist;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return songsList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return songsList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
+    @SuppressLint({"ViewHolder", "SetTextI18n"})
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        convertView = Objects.requireNonNull(inflater).inflate(R.layout.songs_list_adapter_layout, parent, false);
+
+        TextView index = convertView.findViewById(R.id.index);
+        TextView song = convertView.findViewById(R.id.song);
+        TextView artist = convertView.findViewById(R.id.artist);
+
+        index.setText(Integer.toString(position+1));
+        song.setText(songsList.get(position));
+        artist.setText(artistList.get(position));
+
+        return convertView;
     }
 }
