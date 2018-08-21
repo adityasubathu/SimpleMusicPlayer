@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Simple Music Player</string>
+    <string name="albumArt">AlbumArt</string>
 </resources>
