@@ -27,9 +27,7 @@ class SongListFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(activity!!, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    READ_STORAGE_PERMISSION_REQUEST_FLAG)
+            ActivityCompat.requestPermissions(activity!!, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), READ_STORAGE_PERMISSION_REQUEST_FLAG)
         } else {
             prepareAdapter()
         }
@@ -69,8 +67,7 @@ class SongListFragment : Fragment() {
             val manager = activity!!.supportFragmentManager
             val transaction = manager.beginTransaction()
 
-            val nowPlayingFragment = NowPlayingFragment(null, songsList[position], artistList[position],
-                    albumList[position], songDuration[position])
+            val nowPlayingFragment = NowPlayingFragment(null, songsList[position], artistList[position], albumList[position], songDuration[position])
 
             transaction.replace(R.id.mainFragmentHolder, nowPlayingFragment, "NowPlayingFragment")
             transaction.addToBackStack("songListFragment")

@@ -15,9 +15,8 @@ import java.util.*
 
 @SuppressLint("ValidFragment")
 
-class NowPlayingFragment
-(private val albumArtPath: String?, private val songTitle: String, private val artistName: String,
- private val albumName: String, private val songDuration: Int) : Fragment() {
+class NowPlayingFragment(private val albumArtPath: String?, private val songTitle: String, private val artistName: String,
+                         private val albumName: String, private val songDuration: Int) : Fragment() {
 
     private lateinit var v: View
 
@@ -36,9 +35,11 @@ class NowPlayingFragment
         val albumArtistTitleTextView = v.findViewById<TextView>(R.id.albumArtistTitleTextView)
         val songTimeSeekBar = v.findViewById<SeekBar>(R.id.songTimeSeekBar)
 
-        val uri = Uri.parse(Environment.getExternalStorageDirectory().absolutePath + albumArtPath)
+        if (albumArtPath != null) {
+            val uri = Uri.parse(Environment.getExternalStorageDirectory().absolutePath + albumArtPath)
+            albumArtImageView.setImageURI(uri)
+        }
 
-        albumArtImageView.setImageURI(uri)
         songTitleTextView.text = songTitle
         albumArtistTitleTextView.text = String.format(Locale.getDefault(), "%s - %s", artistName, albumName)
         songTimeSeekBar.max = songDuration
