@@ -16,7 +16,7 @@ import java.util.*
 @SuppressLint("ValidFragment")
 
 class NowPlayingFragment(private val albumArtPath: String?, private val songTitle: String, private val artistName: String,
-                         private val albumName: String, private val songDuration: Int) : Fragment() {
+                         private val albumName: String, private val songDuration: String) : Fragment() {
 
     private lateinit var v: View
 
@@ -42,7 +42,7 @@ class NowPlayingFragment(private val albumArtPath: String?, private val songTitl
 
         songTitleTextView.text = songTitle
         albumArtistTitleTextView.text = String.format(Locale.getDefault(), "%s - %s", artistName, albumName)
-        songTimeSeekBar.max = songDuration
+        songTimeSeekBar.max = songDuration.toInt()
 
     }
 }

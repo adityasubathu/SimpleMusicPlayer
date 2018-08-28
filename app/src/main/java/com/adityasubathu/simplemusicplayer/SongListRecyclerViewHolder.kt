@@ -12,10 +12,6 @@ class SongListRecyclerViewHolder(itemView: View, recyclerViewClickListener : Rec
 
     override fun onClick(v: View?) {
 
-        val a = this.oldPosition
-        val b = this.adapterPosition
-        val c = this.layoutPosition
-        val d = this.position
         listener.recyclerViewListClicked(v!!, this.adapterPosition)
     }
 

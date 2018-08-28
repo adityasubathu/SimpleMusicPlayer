@@ -19,7 +19,6 @@ class SongListFragment : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         v = inflater.inflate(R.layout.song_list_fragment, container, false)
-
         return v
     }
 
@@ -31,9 +30,7 @@ class SongListFragment : Fragment(){
         } else {
             prepareAdapter()
         }
-
     }
-
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -54,14 +51,13 @@ class SongListFragment : Fragment(){
 
         val recyclerView : RecyclerView = v.findViewById(R.id.songListRecyclerView)
 
-        val songsList : MutableList<String> = MusicListsManager.getSongsList(activity!!)
-        val artistList : MutableList<String> = MusicListsManager.getArtistsList(activity!!)
-        val albumList : MutableList<String> = MusicListsManager.getAlbumsList(activity!!)
-        val songDuration : MutableList<Int> = MusicListsManager.getSongsDurationList(activity!!)
-
+        val songsList : MutableList<String> = Lists.getSongsList(activity!!) as MutableList<String>
+        val artistList : MutableList<String> = Lists.getArtistsList(activity!!) as MutableList<String>
+        val albumList : MutableList<String> = Lists.getAlbumsList(activity!!) as MutableList<String>
+        val songDuration : MutableList<String> = Lists.getSongsDurationList(activity!!) as MutableList<String>
 
        /* Needle.onBackgroundThread().execute {
-            val albumArtPathList = MusicListsManager.getAlbumArtPathsList(activity!!)
+            val albumArtPathList = Lists.getAlbumArtPathsList(activity!!)
         }*/
 
         var i = 0
@@ -78,7 +74,6 @@ class SongListFragment : Fragment(){
             songInfoObjectsList.add(songInfo)
 
             ++i
-
         }
 
         val llm = LinearLayoutManager(activity!!)
@@ -88,28 +83,10 @@ class SongListFragment : Fragment(){
         val adapter = SongListFragmentRecyclerViewAdapter(activity!!, songInfoObjectsList, activity!!.supportFragmentManager)
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
-
-        /*recyclerView.onItemClickListener = AdapterView.OnItemClickListener { _, view, position, _ ->
-            val snackbar = Snackbar.make(view, songsList[position], Snackbar.LENGTH_SHORT)
-            snackbar.show()
-
-            val manager = activity!!.supportFragmentManager
-            val transaction = manager.beginTransaction()
-
-            val nowPlayingFragment = NowPlayingFragment(null, songsList[position], artistList[position], albumList[position], songDuration[position])
-
-            transaction.replace(R.id.mainFragmentHolder, nowPlayingFragment, "NowPlayingFragment")
-            transaction.addToBackStack("songListFragment")
-            transaction.commit()
-
-        }*/
-
-
-
     }
 
     companion object {
-        private const val READ_STORAGE_PERMISSION_REQUEST_FLAG = 1
+        const val READ_STORAGE_PERMISSION_REQUEST_FLAG = 1
     }
 }
 

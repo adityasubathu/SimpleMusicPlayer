@@ -17,14 +17,14 @@ class SongListFragmentRecyclerViewAdapter (c: Context, list : MutableList<SongIn
 
     override fun recyclerViewListClicked(v: View, position: Int) {
 
-        val snackbar = Snackbar.make(v, MusicListsManager.getSongsList(contexts)[position], Snackbar.LENGTH_SHORT)
+        val snackbar = Snackbar.make(v, Lists.getSongsList(contexts)[position], Snackbar.LENGTH_SHORT)
         snackbar.show()
 
         val transaction = manager.beginTransaction()
 
-        val nowPlayingFragment = NowPlayingFragment(null, MusicListsManager.getSongsList(contexts)[position],
-                MusicListsManager.getArtistsList(contexts)[position], MusicListsManager.getAlbumsList(contexts)[position],
-                MusicListsManager.getSongsDurationList(contexts)[position])
+        val nowPlayingFragment = NowPlayingFragment(null, Lists.getSongsList(contexts)[position],
+                Lists.getArtistsList(contexts)[position], Lists.getAlbumsList(contexts)[position],
+                Lists.getSongsDurationList(contexts)[position])
 
         transaction.replace(R.id.mainFragmentHolder, nowPlayingFragment, "NowPlayingFragment")
         transaction.addToBackStack("songListFragment")

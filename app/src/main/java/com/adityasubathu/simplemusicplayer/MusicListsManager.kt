@@ -59,9 +59,9 @@ object MusicListsManager {
         return albumsList
     }
 
-    fun getSongsDurationList(context: Context): MutableList<Int> {
+    fun getSongsDurationList(context: Context): MutableList<String> {
 
-        val songsDurationList: MutableList<Int> = ArrayList()
+        val songsDurationList: MutableList<String> = ArrayList()
         val resolver = context.contentResolver
         val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         val cursor = resolver.query(uri, null, null, null, MediaStore.Audio.Media.TITLE)
@@ -70,7 +70,7 @@ object MusicListsManager {
             val songDurationIndex = cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)
             do {
                 val duration = cursor.getInt(songDurationIndex)
-                songsDurationList.add(duration)
+                songsDurationList.add(duration.toString())
             } while (cursor.moveToNext())
         }
         cursor.close()
@@ -98,46 +98,4 @@ object MusicListsManager {
         albumArtCursor.close()
         return albumArtPathsList
     }
-
-    /*public fun getMusicInfo(context: Context) {
-        val resolver = context.contentResolver
-        val songsUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-        val songsCursor = resolver.query(songsUri, null, null, null, MediaStore.Audio.Media.TITLE)
-
-        if (songsCursor != null && songsCursor.moveToFirst()) {
-            val songTitleIndex = songsCursor.getColumnIndex(MediaStore.Audio.Media.TITLE)
-            val songArtistIndex = songsCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST)
-            val songAlbumIndex = songsCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM)
-            val songDurationIndex = songsCursor.getColumnIndex(MediaStore.Audio.Media.DURATION)
-            var i = 0
-            lateinit var albumArtCursor: Cursor
-            do {
-                val title = songsCursor.getString(songTitleIndex)
-                val artist = songsCursor.getString(songArtistIndex)
-                val album = songsCursor.getString(songAlbumIndex)
-                val duration = songsCursor.getInt(songDurationIndex)
-                val albumId = songsCursor.getInt(songsCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))
-                albumArtCursor = context.contentResolver.query(MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,
-                        arrayOf(MediaStore.Audio.Albums._ID, MediaStore.Audio.Albums.ALBUM_ART), MediaStore.Audio.Albums._ID + "=?",
-                        arrayOf(albumId.toString()), null)
-                if (albumArtCursor.moveToFirst()) {
-                    var albumArtPath = albumArtCursor.getString(albumArtCursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART))
-                    if (albumArtPath == null) {
-                        albumArtPath = ""
-                    }
-                    SongListFragment.albumArtPathList.add(albumArtPath)
-                }
-                ++i
-                Log.e("valueofi", i.toString())
-                SongListFragment.songsList.add(title)
-                SongListFragment.artistList.add(artist)
-                SongListFragment.albumList.add(album)
-                SongListFragment.songDuration.add(duration)
-
-                albumArtCursor.close()
-            } while (songsCursor.moveToNext())
-        }
-        Objects.requireNonNull(songsCursor).close()
-    }*/
-
 }
