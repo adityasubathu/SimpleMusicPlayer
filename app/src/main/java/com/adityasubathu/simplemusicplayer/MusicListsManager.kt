@@ -5,7 +5,7 @@ import android.provider.MediaStore
 
 object MusicListsManager {
 
-    fun getSongsList(context: Context): List<String> {
+    fun getSongsList(context: Context): MutableList<String> {
 
         val songsList: MutableList<String> = ArrayList()
         val resolver = context.contentResolver
@@ -23,7 +23,7 @@ object MusicListsManager {
         return songsList
     }
 
-    fun getArtistsList(context: Context): List<String> {
+    fun getArtistsList(context: Context): MutableList<String> {
 
         val artistsList: MutableList<String> = ArrayList()
         val resolver = context.contentResolver
@@ -41,7 +41,7 @@ object MusicListsManager {
         return artistsList
     }
 
-    fun getAlbumsList(context: Context): List<String> {
+    fun getAlbumsList(context: Context): MutableList<String> {
 
         val albumsList: MutableList<String> = ArrayList()
         val resolver = context.contentResolver
@@ -59,7 +59,7 @@ object MusicListsManager {
         return albumsList
     }
 
-    fun getSongsDurationList(context: Context): List<Int> {
+    fun getSongsDurationList(context: Context): MutableList<Int> {
 
         val songsDurationList: MutableList<Int> = ArrayList()
         val resolver = context.contentResolver
@@ -77,7 +77,7 @@ object MusicListsManager {
         return songsDurationList
     }
 
-    fun getAlbumArtPathsList(context: Context): List<String> {
+    fun getAlbumArtPathsList(context: Context): MutableList<String> {
 
         val albumArtPathsList: MutableList<String> = ArrayList()
         val resolver = context.contentResolver

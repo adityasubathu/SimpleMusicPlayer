@@ -3,17 +3,17 @@ package com.adityasubathu.simplemusicplayer
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ListView
 
-class SongListFragment : Fragment() {
+class SongListFragment : Fragment(){
+
 
     private lateinit var v: View
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -49,18 +49,47 @@ class SongListFragment : Fragment() {
     }
 
     private fun prepareAdapter() {
-        val listView: ListView = v.findViewById(R.id.songListRecyclerView)
 
-        val songsList = MusicListsManager.getSongsList(activity!!)
-        val artistList = MusicListsManager.getArtistsList(activity!!)
-        val albumList = MusicListsManager.getAlbumsList(activity!!)
-        val songDuration = MusicListsManager.getSongsDurationList(activity!!)
-        //val albumArtPathList = MusicListsManager.getAlbumArtPathsList(activity!!)
+        val songInfoObjectsList : MutableList<SongInfo> = ArrayList()
 
-        val adapter = SongListFragmentAdapter(context!!, songsList, artistList)
-        listView.adapter = adapter
+        val recyclerView : RecyclerView = v.findViewById(R.id.songListRecyclerView)
 
-        listView.onItemClickListener = AdapterView.OnItemClickListener { _, view, position, _ ->
+        val songsList : MutableList<String> = MusicListsManager.getSongsList(activity!!)
+        val artistList : MutableList<String> = MusicListsManager.getArtistsList(activity!!)
+        val albumList : MutableList<String> = MusicListsManager.getAlbumsList(activity!!)
+        val songDuration : MutableList<Int> = MusicListsManager.getSongsDurationList(activity!!)
+
+
+       /* Needle.onBackgroundThread().execute {
+            val albumArtPathList = MusicListsManager.getAlbumArtPathsList(activity!!)
+        }*/
+
+        var i = 0
+
+        while (i < songsList.size) {
+
+            val songInfo = SongInfo()
+
+            songInfo.songTitle = songsList[i]
+            songInfo.songAlbum = albumList[i]
+            songInfo.songArtist = artistList[i]
+            songInfo.songDuration = songDuration[i]
+
+            songInfoObjectsList.add(songInfo)
+
+            ++i
+
+        }
+
+        val llm = LinearLayoutManager(activity!!)
+
+        recyclerView.layoutManager = llm
+
+        val adapter = SongListFragmentRecyclerViewAdapter(activity!!, songInfoObjectsList, activity!!.supportFragmentManager)
+        recyclerView.setHasFixedSize(true)
+        recyclerView.adapter = adapter
+
+        /*recyclerView.onItemClickListener = AdapterView.OnItemClickListener { _, view, position, _ ->
             val snackbar = Snackbar.make(view, songsList[position], Snackbar.LENGTH_SHORT)
             snackbar.show()
 
@@ -73,7 +102,10 @@ class SongListFragment : Fragment() {
             transaction.addToBackStack("songListFragment")
             transaction.commit()
 
-        }
+        }*/
+
+
+
     }
 
     companion object {
