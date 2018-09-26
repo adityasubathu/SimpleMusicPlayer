@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import needle.Needle
 
 class SongListFragment : Fragment(){
 
@@ -55,10 +56,10 @@ class SongListFragment : Fragment(){
         val artistList : MutableList<String> = Lists.getArtistsList(activity!!) as MutableList<String>
         val albumList : MutableList<String> = Lists.getAlbumsList(activity!!) as MutableList<String>
         val songDuration : MutableList<String> = Lists.getSongsDurationList(activity!!) as MutableList<String>
-
-       /* Needle.onBackgroundThread().execute {
-            val albumArtPathList = Lists.getAlbumArtPathsList(activity!!)
+        /*Needle.onBackgroundThread().execute{
+            Lists.getAlbumArtPathsList(activity!!)
         }*/
+
 
         var i = 0
 

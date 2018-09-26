@@ -22,9 +22,8 @@ class SongListFragmentRecyclerViewAdapter (c: Context, list : MutableList<SongIn
 
         val transaction = manager.beginTransaction()
 
-        val nowPlayingFragment = NowPlayingFragment(null, Lists.getSongsList(contexts)[position],
-                Lists.getArtistsList(contexts)[position], Lists.getAlbumsList(contexts)[position],
-                Lists.getSongsDurationList(contexts)[position])
+        val nowPlayingFragment = NowPlayingFragment(Lists.getSongsList(contexts)[position], Lists.getArtistsList(contexts)[position], Lists.getAlbumsList(contexts)[position],
+                Lists.getSongsDurationList(contexts)[position], MusicListsManager.getAlbumIDList(contexts)[position])
 
         transaction.replace(R.id.mainFragmentHolder, nowPlayingFragment, "NowPlayingFragment")
         transaction.addToBackStack("songListFragment")

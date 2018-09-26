@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Simple Music Player</string>
     <string name="albumArt">AlbumArt</string>
+    <string name="duration_now_playing">0:00</string>
 </resources>

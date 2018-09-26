@@ -1,6 +1,8 @@
 package com.adityasubathu.simplemusicplayer
 
 import android.content.Context
+import android.support.v4.app.NotificationCompat
+import android.support.v4.app.NotificationManagerCompat
 
 @Suppress("UNCHECKED_CAST")
 
@@ -10,6 +12,7 @@ object Lists {
     private lateinit var albumsList: ArrayList<String>
     private lateinit var artistsList: ArrayList<String>
     private lateinit var songsDurationList: ArrayList<String>
+    private lateinit var albumArtPathsList: List<String>
 
     fun getSongsList(context: Context): List<String> {
 
@@ -94,4 +97,36 @@ object Lists {
         }
         return MusicListsManager.getSongsDurationList(context)
     }
+
+    /*fun getAlbumArtPathsList(c: Context) {
+
+        val albumArtPathsListPrefs = c.getSharedPreferences("AlbumArtPathsList", Context.MODE_PRIVATE)
+        val serializedList = albumArtPathsListPrefs.getString("AlbumArtPaths", null)
+
+        if (serializedList != null) {
+            albumArtPathsList = SerializeLists.deserialize(serializedList) as ArrayList<String>
+        } else {
+            try {
+                albumArtPathsList = MusicListsManager.getAlbumArtPathsList(c)
+
+                val serialized : String = SerializeLists.serialize(albumArtPathsList as ArrayList)
+                val e = albumArtPathsListPrefs.edit()
+                e.putString("songsDuration", serialized)
+                e.apply()
+
+                val builder = NotificationCompat.Builder(c, "AlbumArtPathsList Size")
+                        .setSmallIcon(R.drawable.ic_launcher_foreground)
+                        .setContentTitle("AlbumArtPathsList Size")
+                        .setContentText(albumArtPathsList.size.toString())
+
+                val n = builder.build()
+                val notificationManager = NotificationManagerCompat.from(c)
+
+                notificationManager.notify(0, n)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }*/
 }
