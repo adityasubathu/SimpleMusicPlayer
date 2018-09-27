@@ -3,12 +3,9 @@
 package com.adityasubathu.simplemusicplayer
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
@@ -41,18 +38,22 @@ class NowPlayingFragment(private val songTitle: String, private val artistName: 
         val songTitleTextView = v.findViewById<TextView>(R.id.songTitleTextView)
         val albumArtistTitleTextView = v.findViewById<TextView>(R.id.albumArtistTitleTextView)
         val songTimeSeekBar = v.findViewById<SeekBar>(R.id.songTimeSeekBar)
+        val durationTextView = v.findViewById<TextView>(R.id.durationTextView)
 
         val albumArtPath = MusicListsManager.getArtFromAlbumID(activity!!, albumID)
 
         Log.d("AlbumArtPath", albumArtPath)
 
-        val uri = Uri.parse(albumArtPath)
-        val b = BitmapFactory.decodeStream(activity!!.contentResolver.openInputStream(uri))
+        val uri = Uri.parse("file://$albumArtPath")
+        val resolver = context!!.contentResolver
+        val b = BitmapFactory.decodeStream(resolver.openInputStream(uri))
         albumArtImageView.setImageBitmap(b)
 
         songTitleTextView.text = songTitle
         albumArtistTitleTextView.text = String.format(Locale.getDefault(), "%s - %s", artistName, albumName)
-        songTimeSeekBar.max = songDuration.toInt()
+        val dur = songDuration.toInt()
+        songTimeSeekBar.max = dur
+        durationTextView.text = songDuration
 
     }
 

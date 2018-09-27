@@ -5,11 +5,12 @@
 
     <ImageView
         android:id="@+id/albumArtImageView"
-        android:layout_width="390dp"
-        android:layout_height="390dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:adjustViewBounds="true"
         android:contentDescription="@string/albumArt"
-        android:scaleType="centerInside" />
+        android:scaleType="fitCenter" />
 
     <LinearLayout
         android:id="@+id/songInfoLinearLayout"
