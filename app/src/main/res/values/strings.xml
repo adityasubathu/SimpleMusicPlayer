@@ -2,4 +2,9 @@
     <string name="app_name">Simple Music Player</string>
     <string name="albumArt">AlbumArt</string>
     <string name="duration_now_playing">0:00</string>
+    <string name="shuffle">shuffle</string>
+    <string name="skip_previous">skip_previous</string>
+    <string name="play_pause">play_pause</string>
+    <string name="skip_next">skip_next</string>
+    <string name="repeat">repeat</string>
 </resources>

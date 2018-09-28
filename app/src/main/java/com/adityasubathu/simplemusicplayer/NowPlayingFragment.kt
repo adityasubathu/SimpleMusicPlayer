@@ -14,8 +14,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
-import android.widget.Toast
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 @SuppressLint("ValidFragment")
 
@@ -53,15 +53,9 @@ class NowPlayingFragment(private val songTitle: String, private val artistName: 
         albumArtistTitleTextView.text = String.format(Locale.getDefault(), "%s - %s", artistName, albumName)
         val dur = songDuration.toInt()
         songTimeSeekBar.max = dur
-        durationTextView.text = songDuration
-
-    }
-
-    fun TextViewToastGenerator(v: TextView) {
-
-        val id = v.text.toString()
-
-        Toast.makeText(activity!!, id, Toast.LENGTH_SHORT).show()
+        durationTextView.text = String.format("%d:%d", TimeUnit.MILLISECONDS.toMinutes(songDuration.toLong()),
+                TimeUnit.MILLISECONDS.toSeconds(songDuration.toLong()) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(songDuration.toLong())))
 
     }
 }
