@@ -1,8 +1,6 @@
 package com.adityasubathu.simplemusicplayer
 
 import android.content.Context
-import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
 
 @Suppress("UNCHECKED_CAST")
 

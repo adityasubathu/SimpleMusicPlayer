@@ -1,6 +1,7 @@
 package com.adityasubathu.simplemusicplayer
 
 import android.content.Context
+import android.content.Intent
 import android.support.design.widget.Snackbar
 import android.support.v4.app.FragmentManager
 import android.support.v7.widget.RecyclerView
@@ -15,7 +16,7 @@ class SongListFragmentRecyclerViewAdapter (c: Context, list : MutableList<SongIn
     private val contexts: Context = c
     private val manager = fragmentManager
 
-    override fun recyclerViewListClicked(v: View, position: Int) {
+    override fun recyclerViewCustomOnClick(v: View, position: Int) {
 
         val snackbar = Snackbar.make(v, Lists.getSongsList(contexts)[position], Snackbar.LENGTH_SHORT)
         snackbar.show()
@@ -28,6 +29,10 @@ class SongListFragmentRecyclerViewAdapter (c: Context, list : MutableList<SongIn
         transaction.replace(R.id.mainFragmentHolder, nowPlayingFragment, "NowPlayingFragment")
         transaction.addToBackStack("songListFragment")
         transaction.commit()
+
+        val musicServiceIntent = Intent(contexts, BackgroundAudioService::class.java)
+        //musicServiceIntent.putExtra("filePath", )
+        contexts.startService(musicServiceIntent)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongListRecyclerViewHolder {

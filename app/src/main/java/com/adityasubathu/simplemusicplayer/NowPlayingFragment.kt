@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package com.adityasubathu.simplemusicplayer
 
 import android.annotation.SuppressLint

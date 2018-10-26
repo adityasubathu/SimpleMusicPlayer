@@ -12,7 +12,7 @@ class SongListRecyclerViewHolder(itemView: View, recyclerViewClickListener : Rec
 
     override fun onClick(v: View?) {
 
-        listener.recyclerViewListClicked(v!!, this.adapterPosition)
+        listener.recyclerViewCustomOnClick(v!!, this.adapterPosition)
     }
 
 
